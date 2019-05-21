@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import codecs, sys
 import jieba
 import pandas as pd
 import pymongo
@@ -12,7 +11,6 @@ from zhon.hanzi import punctuation
 from zhon.hanzi import non_stops
 from zhon.hanzi import stops
 
-
 def clean_stopwords(contents, path):
     stopwords = [line.strip() for line in open(path, 'r', encoding='utf-8').readlines()]
     contents_clean = []
@@ -20,8 +18,7 @@ def clean_stopwords(contents, path):
     for line in contents:
         line_clean = []
         for word in line:
-            print(word in stopwords)
-            if word in stopwords:
+            if word in stopwords or word is ' ':
                 # print(word)
                 continue
             line_clean.append(word)
@@ -36,7 +33,7 @@ def clean_punctuation(text):
     comment = re.sub(r"[%s]+" % non_stops, "", comment)
     punc = '[,.!\'\/#@$-:：\?？]'
     comment = re.sub(punc, '', comment)
-    comment = comment.strip()
+    comment = comment.strip().replace("\n",'')
     comment = jieba.lcut(comment)
     return comment
 
@@ -60,7 +57,6 @@ if __name__ == "__main__":
     words_count = df_all_words.groupby(by=['all_words'])['all_words'].agg({"count": numpy.size})
     words_count = words_count.reset_index().sort_values(by=["count"],
                                                         ascending=False)
-
     print(words_count.head())
     test.wordcloud(words_count)
 

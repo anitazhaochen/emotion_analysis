@@ -7,3 +7,4 @@ __pycache__
 *.csv
 .idea/workspace.xml
 venv/pip-selfcheck.json
+.idea/workspace.xml

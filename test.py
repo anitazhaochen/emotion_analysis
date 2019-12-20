@@ -13,7 +13,7 @@ Mongo_HOST = "localhost"
 Mongo_PORT = 27017
 
 def get_result(comment):
-    s = SnowNLP(u'这个东西真心很好')
+    s = SnowNLP(u'这个东西真心很不好')
     print(s.words)
     print(s.sentiments)
 
